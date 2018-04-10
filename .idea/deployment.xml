@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" autoUpload="On explicit save action" serverName="edxapp@127.0.0.1:2222" filePermissions="420" folderPermissions="493" autoUploadExternalChanges="true">
+    <serverData>
+      <paths name="edxapp@127.0.0.1:2222">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/edx/app/edxapp" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+    <option name="myAutoUpload" value="ON_EXPLICIT_SAVE" />
+  </component>
+</project>
