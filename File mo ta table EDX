@@ -1,0 +1,29 @@
+----------------- Lay thong tin cua Wiki ------------------------
+=====> Table: 
++ 'bitnami_edxapp.wiki_urlpath' -> chua wiki
++ 'bitnami_edxapp.wiki_article' -> chua thong tin nguoi tao wiki
++ 'bitnami_edxapp.auth_user'
++ 'bitnami_edxapp.auth_group'
++ 'bitnami_edxapp.auth_user_groups'
++ 'bitnami_edxapp.wiki_articlerevision'
+
+=====> SQL:
+SELECT `wiki_urlpath`.`id`, `wiki_urlpath`.`article_id`, `wiki_urlpath`.`slug`, `wiki_urlpath`.`site_id`, `wiki_urlpath`.`parent_id`, `wiki_urlpath`.`lft`, `wiki_urlpath`.`rght`, `wiki_urlpath`.`tree_id`, `wiki_urlpath`.`level`, `wiki_article`.`id`, `wiki_article`.`current_revision_id`, `wiki_article`.`created`, `wiki_article`.`modified`, `wiki_article`.`owner_id`, `wiki_article`.`group_id`, `wiki_article`.`group_read`, `wiki_article`.`group_write`, `wiki_article`.`other_read`, `wiki_article`.`other_write`, `wiki_articlerevision`.`id`, `wiki_articlerevision`.`revision_number`, `wiki_articlerevision`.`user_message`, `wiki_articlerevision`.`automatic_log`, `wiki_articlerevision`.`ip_address`, `wiki_articlerevision`.`user_id`, `wiki_articlerevision`.`modified`, `wiki_articlerevision`.`created`, `wiki_articlerevision`.`previous_revision_id`, `wiki_articlerevision`.`deleted`, `wiki_articlerevision`.`locked`, `wiki_articlerevision`.`article_id`, `wiki_articlerevision`.`content`, `wiki_articlerevision`.`title`, `auth_user`.`id`, `auth_user`.`password`, `auth_user`.`last_login`, `auth_user`.`is_superuser`, `auth_user`.`username`, `auth_user`.`first_name`, `auth_user`.`last_name`, `auth_user`.`email`, `auth_user`.`is_staff`, `auth_user`.`is_active`, `auth_user`.`date_joined`, T2.`id`, T2.`article_id`, T2.`slug`, T2.`site_id`, T2.`parent_id`, T2.`lft`, T2.`rght`, T2.`tree_id`, T2.`level` FROM 
+`wiki_urlpath` 
+INNER JOIN `wiki_urlpath` T2 ON ( `wiki_urlpath`.`parent_id` = T2.`id` ) 
+INNER JOIN `wiki_article` ON ( `wiki_urlpath`.`article_id` = `wiki_article`.`id` ) 
+LEFT OUTER JOIN `auth_user` ON ( `wiki_article`.`owner_id` = `auth_user`.`id` ) 
+LEFT OUTER JOIN `auth_group` ON ( `wiki_article`.`group_id` = `auth_group`.`id` ) 
+LEFT OUTER JOIN `auth_user_groups` ON ( `auth_group`.`id` = `auth_user_groups`.`group_id` ) 
+LEFT OUTER JOIN `wiki_articlerevision` ON ( `wiki_article`.`current_revision_id` = `wiki_articlerevision`.`id` ) 
+WHERE (
+	`wiki_urlpath`.`parent_id` = 1 AND 
+	(`wiki_article`.`other_read` = True 
+		OR `wiki_article`.`owner_id` = 3 
+		OR 
+		(`auth_user_groups`.`user_id` = 3 AND `wiki_article`.`group_read` = True)
+	)
+) 
+ORDER BY `wiki_articlerevision`.`title` ASC LIMIT 4
+
+----------------- Lay thong tin cua Wiki ------------------------
